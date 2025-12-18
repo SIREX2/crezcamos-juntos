@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crezcamos Juntos - Administración</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f3;
+            color: #333;
+        }
+
+        /* PANTALLA DE BLOQUEO */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #004d40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            width: 350px;
+            overflow: hidden;
+            /* Animación de entrada de la caja */
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: #eee;
+        }
+
+        .auth-tabs button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            background: #e0e0e0;
+            color: #777;
+            transition: 0.3s;
+        }
+
+        .auth-tabs button.active {
+            background: white;
+            color: #00796b;
+            border-bottom: 3px solid #00796b;
+        }
+
+        .auth-content {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+        }
+
+        /* Animación para el cambio de formularios */
+        .form-fade {
+            animation: slideFade 0.4s ease-in-out;
+        }
+
+        @keyframes slideFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .auth-content input:focus {
+            border-color: #00796b;
+        }
+
+        .main-btn {
+            background: #00796b;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .main-btn:hover {
+            background: #004d40;
+            transform: translateY(-2px);
+        }
+
+        .main-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Resto de estilos del sitio */
+        header { background-color: #d32f2f; padding: 20px 50px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        #nav-filter { background-color: #004d40; }
+        #nav-filter ul { list-style: none; display: flex; margin: 0; padding: 0 50px; justify-content: flex-start; }
+        #nav-filter li { padding: 15px 25px; color: #b2dfdb; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
+        #nav-filter li.active { background-color: #f0f4f3; color: #004d40; }
+        .container { max-width: 1100px; margin: 30px auto; display: flex; gap: 20px; padding: 0 20px; }
+        .persona-card { display: flex; align-items: center; background: white; padding: 15px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .persona-card:hover { transform: scale(1.02); }
+        .persona-foto { font-size: 30px; margin-right: 15px; }
+        .general-content { text-align: center; background: white; padding: 40px; border-radius: 20px; width: 100%; }
+        .general-content img { max-width: 100%; border-radius: 15px; margin-bottom: 20px; }
+        #lista-oficios li { background: white; padding: 15px; margin-bottom: 10px; border-left: 5px solid #00796b; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        #lista-oficios li:hover { background: #e0f2f1; padding-left: 20px; }
+        .general-layout #lista-oficios { display: none; }
+        .general-layout #detalle-personas { flex: 1; }
+    </style>
+</head>
+<body>
+
+<div id="login-screen">
+    <div class="auth-container">
+        <div class="auth-tabs">
+            <button id="tab-login" class="active" onclick="switchAuth('login')">INICIAR SESIÓN</button>
+            <button id="tab-register" onclick="switchAuth('register')">REGISTRARSE</button>
+        </div>
+        
+        <div class="auth-content">
+            <div id="form-login" class="form-fade">
+                <h2>Bienvenido</h2>
+                <input type="text" id="user" placeholder="Usuario">
+                <input type="password" id="pass" placeholder="Contraseña">
+                <button class="main-btn" onclick="validarAcceso()">ENTRAR</button>
+                <p id="error-msg" style="color:red; display:none; margin-top:10px; font-size:14px;">Usuario o contraseña incorrectos</p>
+            </div>
+
+            <div id="form-register" class="form-fade" style="display: none;">
+                <h2>Crear Cuenta</h2>
+                <input type="text" placeholder="Nombre Completo">
+                <input type="email" placeholder="Correo Electrónico">
+                <input type="password" placeholder="Crear Contraseña">
+                <button class="main-btn" onclick="alert('El registro está deshabilitado temporalmente.')">CREAR CUENTA</button>
+                <p style="font-size: 12px; color: #777; margin-top: 10px;">Acceso exclusivo para personal autorizado.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <h1>Crezcamos Juntos (ADMIN)</h1>
+    <span>⚙️</span>
+</header>
+
+<nav id="nav-filter">
+    <ul>
+        <li id="tab-general" onclick="filtrarOficios('general', this)">GENERAL</li>
+        <li id="tab-hogar" onclick="filtrarOficios('hogar', this)">HOGAR</li>
+        <li id="tab-manuales" onclick="filtrarOficios('manuales', this)">MANUALES</li>
+    </ul>
+</nav>
+
+<div class="container" id="main-container">
+    <div id="lista-oficios" style="flex:1">
+        <h2>Oficios</h2>
+        <div id="resultados"></div>
+    </div>
+    <div id="detalle-personas" style="flex:2"></div>
+</div>
+
+<script>
+    const personasPorOficio = {
+        'albañil': [{ nombre: 'Juan Pérez', edad: 45, icon: '👷' }],
+        'electricista': [{ nombre: 'Carlos Ruiz', edad: 50, icon: '💡' }],
+        'plomero': [{ nombre: 'Miguel Torres', edad: 41, icon: '💧' }],
+        'gasista': [{ nombre: 'Roberto Flores', edad: 55, icon: '🔥' }],
+        'carpintero': [{ nombre: 'Elena Vázquez', edad: 38, icon: '🌳' }],
+        'soldador': [{ nombre: 'Javier Ramos', edad: 47, icon: '🛡️' }],
+        'hojalatero': [{ nombre: 'Sofía Mena', edad: 30, icon: '⚙️' }]
+    };
+
+    const oficios = [
+        {oficio: 'albañil', tipo: 'hogar'}, {oficio: 'electricista', tipo: 'hogar'},
+        {oficio: 'plomero', tipo: 'hogar'}, {oficio: 'gasista', tipo: 'hogar'},
+        {oficio: 'carpintero', tipo: 'manuales'}, {oficio: 'soldador', tipo: 'manuales'},
+        {oficio: 'hojalatero', tipo: 'manuales'}
+    ];
+
+    function switchAuth(type) {
+        const loginForm = document.getElementById('form-login');
+        const registerForm = document.getElementById('form-register');
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+
+        // Reiniciar animaciones
+        loginForm.classList.remove('form-fade');
+        registerForm.classList.remove('form-fade');
+        void loginForm.offsetWidth; // Truco para reiniciar animación CSS
+
+        if (type === 'login') {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            loginForm.classList.add('form-fade');
+            tabLogin.classList.add('active');
+            tabRegister.classList.remove('active');
+        } else {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            registerForm.classList.add('form-fade');
+            tabLogin.classList.remove('active');
+            tabRegister.classList.add('active');
+        }
+    }
+
+    function validarAcceso() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+
+        if (u === 'admin' && p === 'admin') {
+            // Animación de salida antes de borrar
+            document.getElementById('login-screen').style.transition = '0.5s';
+            document.getElementById('login-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('login-screen').remove();
+                filtrarOficios('general', document.getElementById('tab-general'));
+            }, 500);
+        } else {
+            document.getElementById('error-msg').style.display = 'block';
+        }
+    }
+
+    // Funciones de navegación 
+    function mostrarDetalles(oficioNombre) {
+        const det = document.getElementById('detalle-personas');
+        const lista = personasPorOficio[oficioNombre];
+        let html = `<h3>Trabajadores de ${oficioNombre.toUpperCase()}</h3>`;
+        lista.forEach(p => {
+            html += `<div class="persona-card"><div class="persona-foto">${p.icon}</div><div><strong>${p.nombre}</strong><br>Edad: ${p.edad}</div></div>`;
+        });
+        det.innerHTML = html;
+    }
+
+    function filtrarOficios(filtro, elemento) {
+        const main = document.getElementById('main-container');
+        const det = document.getElementById('detalle-personas');
+        const res = document.getElementById('resultados');
+        document.querySelectorAll('#nav-filter li').forEach(li => li.classList.remove('active'));
+        elemento.classList.add('active');
+
+        if (filtro === 'general') {
+            main.classList.add('general-layout');
+            det.innerHTML = `<div class="general-content"><img src="https://i.ibb.co/wFTqZ6XZ/loco.jpg" alt="Loco" /><p>"La obra más importante..."</p></div>`;
+        } else {
+            main.classList.remove('general-layout');
+            const filtrados = oficios.filter(o => o.tipo === filtro);
+            let html = '<ul>';
+            filtrados.forEach(o => {
+                html += `<li onclick="mostrarDetalles('${o.oficio}')">${o.oficio.toUpperCase()}</li>`;
+            });
+            res.innerHTML = html + '</ul>';
+            det.innerHTML = '<h3>Selecciona un oficio...</h3>';
+        }
+    }
+</script>
+</body>
+</html>
