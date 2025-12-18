@@ -1,325 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crezcamos Juntos - Lista Interactiva Profesional</title>
-
+    <title>Crezcamos Juntos - Lista Interactiva</title>
     <style>
-        /* --- ESTILOS MEJORADOS --- */
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f4f3; /* Color más suave */
+            background-color: #f0f4f3;
             color: #333;
-            line-height: 1.6;
         }
 
         header {
             background-color: #00796b;
             padding: 20px 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            position: relative;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content:间-between;
-        }
-
-        .site-title {
             color: white;
-            font-size: 2.2em;
-            margin: 0;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .logo-group {
-            position: absolute;
-            right: 50px;
-            top: 15px;
-            text-align: center;
-        }
-
-        .logo-container {
-            border: 3px solid #8d6e63;
-            width: 140px;
-            height: 60px;
-            border-radius: 50px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .site-name-circle {
-            color: #004d40;
-            font-size: 0.85em;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        /* --- NAVEGACIÓN PEGAJOSA --- */
         #nav-filter {
             background-color: #004d40;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         #nav-filter ul {
             list-style: none;
-            padding: 0;
-            margin: 0 auto;
             display: flex;
-            max-width: 1000px;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
         }
 
         #nav-filter li {
-            padding: 18px 25px;
+            padding: 15px 25px;
             color: #b2dfdb;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 0.9em;
-        }
-
-        #nav-filter li:hover {
-            background-color: #00695c;
-            color: white;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
         #nav-filter li.active {
             background-color: #f0f4f3;
             color: #004d40;
-            border-top: 4px solid #8d6e63;
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
         .container {
-            width: 90%;
             max-width: 1100px;
-            margin: 40px auto;
+            margin: 30px auto;
             display: flex;
-            gap: 30px;
+            gap: 20px;
+            padding: 0 20px;
         }
 
-        #lista-oficios {
-            flex: 1;
-            min-width: 320px;
-        }
-
-        #lista-oficios h2 {
-            color: #004d40;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        /* --- LISTA DE OFICIOS (BOTONES) --- */
-        #lista-oficios li {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 8px solid #009688;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        #lista-oficios li:hover {
-            transform: translateX(10px);
-            background-color: #00796b;
-            color: white;
-        }
-
-        #lista-oficios li:hover span {
-            color: #e0f2f1;
-        }
-
-        /* --- TARJETAS DE PERSONAS --- */
-        #detalle-personas {
-            flex: 2;
-            padding: 25px;
-            background-color: transparent;
-        }
-
-        .persona-card {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .persona-card:hover {
-            transform: scale(1.02);
-        }
-
-        .persona-foto {
-            width: 70px;
-            height: 70px;
-            background-color: #e0f2f1;
-            border-radius: 50%;
-            margin-right: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 35px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .persona-info strong {
-            display: block;
-            color: #004d40;
-            font-size: 1.2em;
-            margin-bottom: 5px;
-        }
-
-        .persona-info span {
-            color: #667;
-            font-size: 0.95em;
-        }
-
-        /* --- ESTADO GENERAL --- */
-        .general-layout #lista-oficios { display: none; }
-        .general-layout #detalle-personas { flex: 1; width: 100%; }
-
+        /* --- ESTILO DE LA IMAGEN EN GENERAL --- */
         .general-content {
             text-align: center;
             background: white;
-            padding: 50px;
+            padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .general-content img {
-            max-width: 300px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .general-content p {
-            font-size: 1.4em;
-            color: #004d40;
+            font-size: 1.3em;
             font-style: italic;
-            line-height: 1.6;
+            color: #004d40;
         }
+
+        /* --- TARJETAS DE PERSONAS --- */
+        .persona-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .persona-foto {
+            font-size: 30px;
+            margin-right: 15px;
+        }
+
+        #lista-oficios li {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 5px solid #00796b;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Layout para ocultar/mostrar */
+        .general-layout #lista-oficios { display: none; }
+        .general-layout #detalle-personas { flex: 1; }
     </style>
 </head>
-
 <body>
 
-    <header>
-        <h1 class="site-title">Nuestros Oficios</h1>
-        <div class="logo-group">
-            <div class="logo-container">
-                <h1 class="site-name-circle">Crezcamos Juntos</h1>
-            </div>
-            <span class="mini-house" style="font-size: 2em;">🏠</span>
-        </div>
-    </header>
+<header>
+    <h1>Crezcamos Juntos</h1>
+    <span>🏠</span>
+</header>
 
-    <nav id="nav-filter">
-        <ul>
-            <li class="active" id="tab-general" onclick="filtrarOficios('general', this)">General</li>
-            <li id="tab-hogar" onclick="filtrarOficios('hogar', this)">Hogar</li>
-            <li id="tab-manuales" onclick="filtrarOficios('manuales', this)">Artesanales</li>
-        </ul>
-    </nav>
+<nav id="nav-filter">
+    <ul>
+        <li id="tab-general" onclick="filtrarOficios('general', this)">GENERAL</li>
+        <li id="tab-hogar" onclick="filtrarOficios('hogar', this)">HOGAR</li>
+        <li id="tab-manuales" onclick="filtrarOficios('manuales', this)">MANUALES</li>
+    </ul>
+</nav>
 
-    <div class="container" id="main-container">
-        <div id="lista-oficios">
-            <h2>🛠️ Oficios</h2>
-            <div id="resultados"></div>
-        </div>
-
-        <div id="detalle-personas">
-            </div>
+<div class="container" id="main-container">
+    <div id="lista-oficios" style="flex:1">
+        <h2>Oficios</h2>
+        <div id="resultados"></div>
     </div>
+    <div id="detalle-personas" style="flex:2"></div>
+</div>
 
-    <script>
-        const personasPorOficio = {
-            'albañil': [{ nombre: 'Juan Pérez', edad: 45, icon: '👷' }, { nombre: 'Luis García', edad: 32, icon: '👷' }],
-            'electricista': [{ nombre: 'Carlos Ruiz', edad: 50, icon: '💡' }, { nombre: 'Ana Soto', edad: 28, icon: '💡' }],
-            'plomero': [{ nombre: 'Miguel Torres', edad: 41, icon: '💧' }],
-            'gasista': [{ nombre: 'Roberto Flores', edad: 55, icon: '🔥' }],
-            'carpintero': [{ nombre: 'Elena Vázquez', edad: 38, icon: '🌳' }, { nombre: 'David Núñez', edad: 25, icon: '🌳' }],
-            'soldador': [{ nombre: 'Javier Ramos', edad: 47, icon: '🛡️' }],
-            'hojalatero': [{ nombre: 'Sofía Mena', edad: 30, icon: '⚙️' }]
-        };
+<script>
+    const personasPorOficio = {
+        'albañil': [{ nombre: 'Juan Pérez', edad: 45, icon: '👷' }],
+        'electricista': [{ nombre: 'Carlos Ruiz', edad: 50, icon: '💡' }],
+        'plomero': [{ nombre: 'Miguel Torres', edad: 41, icon: '💧' }],
+        'gasista': [{ nombre: 'Roberto Flores', edad: 55, icon: '🔥' }],
+        'carpintero': [{ nombre: 'Elena Vázquez', edad: 38, icon: '🌳' }],
+        'soldador': [{ nombre: 'Javier Ramos', edad: 47, icon: '🛡️' }],
+        'hojalatero': [{ nombre: 'Sofía Mena', edad: 30, icon: '⚙️' }]
+    };
 
-        const oficios = [
-            {oficio: 'albañil', tipo: 'hogar', desc: 'Construcción y mampostería'},
-            {oficio: 'electricista', tipo: 'hogar', desc: 'Sistemas eléctricos'},
-            {oficio: 'plomero', tipo: 'hogar', desc: 'Agua y grifería'},
-            {oficio: 'gasista', tipo: 'hogar', desc: 'Gas natural y envasado'},
-            {oficio: 'carpintero', tipo: 'manuales', desc: 'Muebles de madera'},
-            {oficio: 'soldador', tipo: 'manuales', desc: 'Soldadura de metales'},
-            {oficio: 'hojalatero', tipo: 'manuales', desc: 'Chapas y canaletas'}
-        ];
+    const oficios = [
+        {oficio: 'albañil', tipo: 'hogar'},
+        {oficio: 'electricista', tipo: 'hogar'},
+        {oficio: 'plomero', tipo: 'hogar'},
+        {oficio: 'gasista', tipo: 'hogar'},
+        {oficio: 'carpintero', tipo: 'manuales'},
+        {oficio: 'soldador', tipo: 'manuales'},
+        {oficio: 'hojalatero', tipo: 'manuales'}
+    ];
 
-        function mostrarDetalles(oficioNombre) {
-            document.getElementById('main-container').classList.remove('general-layout');
-            const contenedorDetalles = document.getElementById('detalle-personas');
-            const lista = personasPorOficio[oficioNombre];
+    function mostrarDetalles(oficioNombre) {
+        const det = document.getElementById('detalle-personas');
+        const lista = personasPorOficio[oficioNombre];
+        let html = `<h3>Trabajadores de ${oficioNombre.toUpperCase()}</h3>`;
+        lista.forEach(p => {
+            html += `<div class="persona-card"><div class="persona-foto">${p.icon}</div><div><strong>${p.nombre}</strong><br>Edad: ${p.edad}</div></div>`;
+        });
+        det.innerHTML = html;
+    }
 
-            let html = `<h2 style="margin-top:0; color:#004d40">Personal de ${oficioNombre.toUpperCase()}</h2>`;
-            lista.forEach(p => {
-                html += `
-                    <div class="persona-card">
-                        <div class="persona-foto">${p.icon}</div>
-                        <div class="persona-info">
-                            <strong>${p.nombre}</strong>
-                            <span>Edad: ${p.edad} años</span>
-                        </div>
-                    </div>`;
-            });
-            contenedorDetalles.innerHTML = html;
-        }
+    function filtrarOficios(filtro, elemento) {
+        const main = document.getElementById('main-container');
+        const det = document.getElementById('detalle-personas');
+        const res = document.getElementById('resultados');
 
-        function filtrarOficios(filtro, elemento) {
-            const res = document.getElementById('resultados');
-            const det = document.getElementById('detalle-personas');
-            const main = document.getElementById('main-container');
+        document.querySelectorAll('#nav-filter li').forEach(li => li.classList.remove('active'));
+        elemento.classList.add('active');
 
-            document.querySelectorAll('#nav-filter li').forEach(li => li.classList.remove('active'));
-            elemento.classList.add('active');
-
-            if (filtro === 'general') {
-                main.classList.add('general-layout');
-                det.innerHTML = `
-                    <div class="general-content">
-                        <img src="<a href="https://imgbb.com/"><img src="https://i.ibb.co/9kB7j3Sc/loco.jpg" alt="loco" border="0"></a>" />
-                        <p>"La obra más importante que harás en esta vida será la que realices dentro de las paredes de tu propio hogar"</p>
-                    </div>`;
-                return;
-            }
-
+        if (filtro === 'general') {
+            main.classList.add('general-layout');
+            det.innerHTML = `
+                <div class="general-content">
+                    <img src="https://i.ibb.co/wFTqZ6XZ/loco.jpg" alt="Loco" />
+                    <p>"La obra más importante que harás en esta vida será la que realices dentro de las paredes de tu propio hogar"</p>
+                </div>`;
+        } else {
             main.classList.remove('general-layout');
             const filtrados = oficios.filter(o => o.tipo === filtro);
-            let html = '<ul style="padding:0; list-style:none;">';
+            let html = '<ul>';
             filtrados.forEach(o => {
-                html += `
-                    <li onclick="mostrarDetalles('${o.oficio}')">
-                        <strong style="font-size:1.1em">${o.oficio.toUpperCase()}</strong>
-                        <span style="display:block; font-size:0.9em; opacity:0.8;">${o.desc}</span>
-                    </li>`;
+                html += `<li onclick="mostrarDetalles('${o.oficio}')">${o.oficio.toUpperCase()}</li>`;
             });
             res.innerHTML = html + '</ul>';
-            det.innerHTML = '<div style="text-align:center; padding-top:50px; color:#666;"><h3>Selecciona un oficio a la izquierda para ver los trabajadores</h3></div>';
+            det.innerHTML = '<h3>Selecciona un oficio...</h3>';
         }
+    }
 
-        window.onload = () => filtrarOficios('general', document.getElementById('tab-general'));
-    </script>
+    window.onload = () => filtrarOficios('general', document.getElementById('tab-general'));
+</script>
+
 </body>
 </html>
-
-
